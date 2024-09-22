@@ -27,7 +27,7 @@ steps:
       - '.'
       - '--namespace'
       - '${_K8S_NAMESPACE}'
-    dir: './nginx-gateway-fabric'
+    dir: 'k8s-resources/v2/project-dev/cluster-gke-dev/nginx-gateway-fabric'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
