@@ -29,7 +29,6 @@ steps:
       - '${_K8S_NAMESPACE}'
     dir: 'k8s-resources/v2/project-dev/cluster-gke-dev/nginx-gateway-fabric'
     env:
-      - 'KUBECONFIG=/workspace/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
@@ -40,7 +39,6 @@ steps:
       - '-f'
       - 'k8s-resources/v2/project-dev/cluster-gke-dev/gateway.yaml'
     env:
-      - 'KUBECONFIG=/workspace/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
@@ -54,7 +52,6 @@ steps:
       - '${_K8S_NAMESPACE}'
       - '--timeout=600s'
     env:
-      - 'KUBECONFIG=/workspace/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 substitutions:
