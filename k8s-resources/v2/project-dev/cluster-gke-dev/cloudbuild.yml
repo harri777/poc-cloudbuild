@@ -54,3 +54,5 @@ substitutions:
   _CLUSTER_ZONE: 'us-east1'
   _K8S_NAMESPACE: 'default'
   _DEPLOYMENT_NAME: 'ngf-nginx-gateway-fabric'
+options:
+  logging: CLOUD_LOGGING_ONLY
