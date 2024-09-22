@@ -30,7 +30,7 @@ steps:
     args:
       - 'apply'
       - '-f'
-      - 'k8s-resources/v2/project-dev/metabase .'
+      - '/metabase .'
     env:
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
