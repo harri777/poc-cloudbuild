@@ -33,4 +33,4 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: metabase-public-database-password
-                  key: METABASE_PUBLIC_DATABASE_PASSWORD
+                  key: key
