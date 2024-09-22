@@ -8,7 +8,7 @@ steps:
         gcloud config set project $PROJECT_ID
         gcloud container clusters get-credentials ${_CLUSTER_NAME} --region ${_CLUSTER_ZONE} --project $PROJECT_ID
 
-   - id: 'Create Namespaces'
+  - id: 'Create Namespaces'
     name: 'gcr.io/cloud-builders/kubectl'
     args:
       - 'apply'
