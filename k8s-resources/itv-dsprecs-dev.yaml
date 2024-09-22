@@ -1,0 +1,32 @@
+# DEV jobs are disabled - uncomment for testing
+cron: {}
+  # hubplus-tv-attribution:
+  #   roles:
+  #   - roles/secretmanager.secretAccessor
+  #   schedule: '0 0 12 * *'
+  #   image: hub-plus-tv-attribution-image
+  # lifestage:
+  #   schedule: '0 4 * * 1'
+  #   image: lifestage-image
+  #   service_account: sa-lifestage-compute
+  #   resources:
+  #     cpu: 4
+  #     memory: 16Gi
+  #     storage: 10Gi
+  # lifestage-test:
+  #   schedule: '0 4 * * 2'
+  #   image: lifestage-image
+  #   image-tag: prodtest
+  #   service_account: sa-lifestage-compute
+  #   resources:
+  #     cpu: 4
+  #     memory: 16Gi
+  #     storage: 10Gi
+  # hastav1:
+  #   schedule: '0 6 * * *'
+  #   image: hastav1-image
+  #   service_account: sa-old-hasta-compute
+  #   resources:
+  #     cpu: 4
+  #     memory: 16Gi
+  #     storage: 10Gi

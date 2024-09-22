@@ -1,0 +1,56 @@
+steps:
+  - id: 'Get Cluster Credentials'
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud config set project $PROJECT_ID
+        gcloud container clusters get-credentials ${_CLUSTER_NAME} --zone ${_CLUSTER_ZONE}
+
+  - id: 'Install Gateway-api'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'gateway-api.yaml'
+    env:
+      - 'KUBECONFIG=/workspace/.kube/config'
+
+  - id: 'Install Nginx Gateway Fabric'
+    name: 'alpine/helm:3.8.0'
+    args:
+      - 'install'
+      - 'ngf'
+      - '.'
+      - '--namespace'
+      - '${_K8S_NAMESPACE}'
+    dir: './nginx-gateway-fabric'
+    env:
+      - 'KUBECONFIG=/workspace/.kube/config'
+
+  - id: 'Install Gateway'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'gateway.yaml'
+    env:
+      - 'KUBECONFIG=/workspace/.kube/config'
+
+  - id: 'Get Deployment Status'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'rollout'
+      - 'status'
+      - 'deployment/${_DEPLOYMENT_NAME}'
+      - '--namespace'
+      - '${_K8S_NAMESPACE}'
+      - '--timeout=600s'
+    env:
+      - 'KUBECONFIG=/workspace/.kube/config'
+substitutions:
+  _CLUSTER_NAME: 'autopilot-cluster-1'
+  _CLUSTER_ZONE: 'us-east1'
+  _K8S_NAMESPACE: 'production'
+  _DEPLOYMENT_NAME: 'ngf-nginx-gateway-fabric'

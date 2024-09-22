@@ -1,0 +1,22 @@
+substitutions:
+  _APP: 'k8s-resources'
+  _DIR: 'crocus/k8s-resources'
+  _TF_ACTION: 'apply'
+
+steps:
+  - id: 'tf plan/apply'
+    name: 'europe-west1-docker.pkg.dev/itv-bde-builds-prd/itv-bde-docker/terragrunt'
+    dir: '${_DIR}'
+    args:
+      - '${_TF_ACTION}'
+    env:
+      - 'PULL_REQUEST_ID=$_PR_NUMBER'
+      - 'BRANCH=$BRANCH_NAME'
+      - 'EXECUTOR=terragrunt'
+
+options:
+  logging: 'CLOUD_LOGGING_ONLY'
+  substitution_option: 'ALLOW_LOOSE'
+
+timeout: 7200s
+tags: ['bde-service-${_APP}-${_TF_ACTION}']
