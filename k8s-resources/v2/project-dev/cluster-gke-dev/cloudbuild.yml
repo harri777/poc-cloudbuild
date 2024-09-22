@@ -13,7 +13,7 @@ steps:
     args:
       - 'apply'
       - '-f'
-      - 'gateway-api.yaml'
+      - 'k8s-resources/v2/project-dev/cluster-gke-dev/gateway-api.yml'
     env:
       - 'KUBECONFIG=/root/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
@@ -38,7 +38,7 @@ steps:
     args:
       - 'apply'
       - '-f'
-      - 'gateway.yaml'
+      - 'k8s-resources/v2/project-dev/cluster-gke-dev/gateway.yaml'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
