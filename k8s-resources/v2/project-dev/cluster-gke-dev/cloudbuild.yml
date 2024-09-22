@@ -52,5 +52,5 @@ steps:
 substitutions:
   _CLUSTER_NAME: 'autopilot-cluster-1'
   _CLUSTER_ZONE: 'us-east1'
-  _K8S_NAMESPACE: 'production'
+  _K8S_NAMESPACE: 'default'
   _DEPLOYMENT_NAME: 'ngf-nginx-gateway-fabric'
