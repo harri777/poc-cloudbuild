@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metabase-public
+  namespace: metabase
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: metabase-public
+  template:
+    metadata:
+      labels:
+        app: metabase-public
+    spec:
+      containers:
+        - name: metabase-public
+          image: metabase/metabase:v0.43.4
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MB_DB_TYPE
+              value: "postgres"
+            - name: MB_DB_DBNAME
+              value: "metabase"
+            - name: MB_DB_PORT
+              value: "5432"
+            - name: MB_DB_USER
+              value: "postgres"
+            - name: MB_DB_HOST
+              value: "34.139.61.78"
+            - name: MB_DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: database-secret
+                  key: METABASE_PUBLIC_DATABASE_PASSWORD

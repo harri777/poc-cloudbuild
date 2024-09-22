@@ -1,0 +1,60 @@
+steps:
+  - id: 'Get Cluster Credentials'
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        gcloud config set project $PROJECT_ID
+        gcloud container clusters get-credentials ${_CLUSTER_NAME} --region ${_CLUSTER_ZONE} --project $PROJECT_ID
+
+  - id: 'Create Kubernetes Secret'
+    name: 'gcr.io/cloud-builders/kubectl'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        kubectl create secret generic metabase-public-database-password \
+          --from-literal=key="${METABASE_PUBLIC_DATABASE_PASSWORD}" \
+          --namespace=${_K8S_NAMESPACE} \
+          --dry-run=client -o yaml | kubectl apply -f -
+    env:
+      - 'METABASE_PUBLIC_DATABASE_PASSWORD=${METABASE_PUBLIC_DATABASE_PASSWORD}'
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
+
+  
+  - id: 'Apply resources'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'k8s-resources/v2/project-dev/metabase .'
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
+
+  - id: 'Get Deployment Status'
+    name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      - 'rollout'
+      - 'status'
+      - 'deployment/${_DEPLOYMENT_NAME}'
+      - '--namespace'
+      - '${_K8S_NAMESPACE}'
+      - '--timeout=600s'
+    env:
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
+      
+substitutions:
+  _CLUSTER_NAME: 'autopilot-cluster-1'
+  _CLUSTER_ZONE: 'us-east1'
+  _K8S_NAMESPACE: 'metabase'
+  _DEPLOYMENT_NAME: 'metabase'
+options:
+  logging: CLOUD_LOGGING_ONLY
+  availableSecrets:
+    secretManager:
+      - versionName: projects/$PROJECT_NUMBER/secrets/metabase-public-database-password/versions/latest
+        env: METABASE_PUBLIC_DATABASE_PASSWORD
