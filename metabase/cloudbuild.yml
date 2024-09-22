@@ -46,7 +46,7 @@ steps:
     env:
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
-      
+
 substitutions:
   _CLUSTER_NAME: 'autopilot-cluster-1'
   _CLUSTER_ZONE: 'us-east1'
@@ -54,7 +54,7 @@ substitutions:
   _DEPLOYMENT_NAME: 'metabase'
 options:
   logging: CLOUD_LOGGING_ONLY
-  availableSecrets:
-    secretManager:
-      - versionName: projects/$PROJECT_NUMBER/secrets/metabase-public-database-password/versions/latest
-        env: METABASE_PUBLIC_DATABASE_PASSWORD
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_NUMBER/secrets/metabase-public-database-password/versions/latest
+      env: METABASE_PUBLIC_DATABASE_PASSWORD
