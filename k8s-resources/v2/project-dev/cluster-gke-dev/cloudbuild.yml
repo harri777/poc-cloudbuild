@@ -20,7 +20,7 @@ steps:
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   - id: 'Install Nginx Gateway Fabric'
-    name: 'alpine/helm:3.8.0'
+    name: 'alpine/helm:3.15.4'
     args:
       - 'install'
       - 'ngf'
