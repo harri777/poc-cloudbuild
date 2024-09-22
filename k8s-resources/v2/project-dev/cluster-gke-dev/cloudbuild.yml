@@ -16,6 +16,8 @@ steps:
       - 'gateway-api.yaml'
     env:
       - 'KUBECONFIG=/root/.kube/config'
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   - id: 'Install Nginx Gateway Fabric'
     name: 'alpine/helm:3.8.0'
@@ -28,6 +30,8 @@ steps:
     dir: './nginx-gateway-fabric'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   - id: 'Install Gateway'
     name: 'gcr.io/cloud-builders/kubectl'
@@ -37,6 +41,8 @@ steps:
       - 'gateway.yaml'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 
   - id: 'Get Deployment Status'
     name: 'gcr.io/cloud-builders/kubectl'
@@ -49,6 +55,8 @@ steps:
       - '--timeout=600s'
     env:
       - 'KUBECONFIG=/workspace/.kube/config'
+      - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
+      - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
 substitutions:
   _CLUSTER_NAME: 'autopilot-cluster-1'
   _CLUSTER_ZONE: 'us-east1'
