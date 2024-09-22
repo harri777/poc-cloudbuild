@@ -15,13 +15,14 @@ steps:
       - '-c'
       - |
         kubectl create secret generic metabase-public-database-password \
-          --from-literal=key="${METABASE_PUBLIC_DATABASE_PASSWORD}" \
+          --from-literal=key="$$METABASE_PUBLIC_DATABASE_PASSWORD" \
           --namespace=${_K8S_NAMESPACE} \
           --dry-run=client -o yaml | kubectl apply -f -
     env:
-      - 'METABASE_PUBLIC_DATABASE_PASSWORD=${METABASE_PUBLIC_DATABASE_PASSWORD}'
       - "CLOUDSDK_COMPUTE_REGION=${_CLUSTER_ZONE}"
       - "CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}"
+    secretEnv: 
+      - 'METABASE_PUBLIC_DATABASE_PASSWORD'
 
   
   - id: 'Apply resources'
