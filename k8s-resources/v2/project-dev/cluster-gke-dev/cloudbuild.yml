@@ -15,7 +15,7 @@ steps:
       - '-f'
       - 'gateway-api.yaml'
     env:
-      - 'KUBECONFIG=/workspace/.kube/config'
+      - 'KUBECONFIG=/root/.kube/config'
 
   - id: 'Install Nginx Gateway Fabric'
     name: 'alpine/helm:3.8.0'
