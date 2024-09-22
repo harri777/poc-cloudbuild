@@ -58,7 +58,7 @@ substitutions:
   _CLUSTER_NAME: 'autopilot-cluster-1'
   _CLUSTER_ZONE: 'us-east1'
   _K8S_NAMESPACE: 'metabase'
-  _DEPLOYMENT_NAME: 'metabase'
+  _DEPLOYMENT_NAME: 'metabase-public'
 
 options:
   logging: CLOUD_LOGGING_ONLY
